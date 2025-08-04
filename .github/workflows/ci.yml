@@ -1,0 +1,27 @@
+name: Build Project
+on: [push]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Install deps
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y build-essential cmake libconfig++-dev
+
+      - name: Generate build files
+        run: |
+          cmake .
+
+      - name: Build
+        run: |
+          cmake --build .
+
+      - name: Run
+        run: |
+          ./hello-world
